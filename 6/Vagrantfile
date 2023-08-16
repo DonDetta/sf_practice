@@ -1,0 +1,19 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+  
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y python3 python3-pip
+    pip3 install psycopg2 django
+  SHELL
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+    vb.cpus = 2
+  end
+
+  config.vm.synced_folder ".", "/vagrant_data"
+
+  # Дальше ситуационно подставить пути для исходника и конечного каталога
+  config.vm.provision "file", source: "путь_к_пустому_файлу", destination: "/путь_на_ВМ/пустой_файл"
+end
